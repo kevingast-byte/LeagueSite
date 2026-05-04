@@ -214,10 +214,192 @@ function calculateStandings() {
     return standingsArray;
 }
 
+// Function to populate upcoming games
+function populateUpcomingGames() {
+    const upcomingGamesDiv = document.getElementById('upcoming-games');
+    upcomingGamesDiv.innerHTML = '';
+
+    const today = new Date();
+    const localDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+    const uniqueDates = [...new Set(schedule.map(game => game.date))].sort();
+    const nextDate = uniqueDates.find(date => date >= localDate) || uniqueDates[0];
+
+    if (!nextDate) {
+        upcomingGamesDiv.innerHTML = '<p>No upcoming games.</p>';
+        return;
+    }
+
+    const nextGames = schedule
+        .filter(game => game.date === nextDate)
+        .sort((a, b) => {
+            const timeToMinutes = timeStr => {
+                const [time, period] = timeStr.toLowerCase().split(' ');
+                const [hours, minutes] = time.split(':').map(Number);
+                const normalizedHours = hours % 12 + (period === 'pm' ? 12 : 0);
+                return normalizedHours * 60 + minutes;
+            };
+            return timeToMinutes(a.time) - timeToMinutes(b.time);
+        });
+
+    if (nextGames.length === 0) {
+        upcomingGamesDiv.innerHTML = '<p>No upcoming games.</p>';
+        return;
+    }
+
+    const gamesByVenue = nextGames.reduce((groups, game) => {
+        if (!groups[game.venue]) groups[game.venue] = [];
+        groups[game.venue].push(game);
+        return groups;
+    }, {});
+
+    Object.keys(gamesByVenue)
+        .sort((a, b) => a.localeCompare(b))
+        .forEach(venue => {
+            upcomingGamesDiv.innerHTML += `
+                <div class="col-12 mt-3">
+                    <h4>${venue}</h4>
+                </div>
+            `;
+
+            gamesByVenue[venue].forEach(game => {
+                const gameCard = `
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${game.home} vs ${game.away}</h5>
+                                <p class="card-text"><strong>${game.time}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                upcomingGamesDiv.innerHTML += gameCard;
+            });
+        });
+}
+
+// Function to fetch local weather
+function weatherCodeToDescription(code) {
+    const map = {
+        0: 'Clear sky',
+        1: 'Mainly clear',
+        2: 'Partly cloudy',
+        3: 'Overcast',
+        45: 'Fog',
+        48: 'Depositing rime fog',
+        51: 'Light drizzle',
+        53: 'Moderate drizzle',
+        55: 'Dense drizzle',
+        56: 'Freezing drizzle',
+        57: 'Dense freezing drizzle',
+        61: 'Slight rain',
+        63: 'Moderate rain',
+        65: 'Heavy rain',
+        66: 'Freezing rain',
+        67: 'Heavy freezing rain',
+        71: 'Slight snow',
+        73: 'Moderate snow',
+        75: 'Heavy snow',
+        77: 'Snow grains',
+        80: 'Rain showers',
+        81: 'Heavy rain showers',
+        82: 'Violent rain showers',
+        85: 'Snow showers',
+        86: 'Heavy snow showers',
+        95: 'Thunderstorm',
+        96: 'Thunderstorm with hail',
+        99: 'Thunderstorm with heavy hail'
+    };
+    return map[code] || 'Unknown weather';
+}
+
+async function fetchWeatherData(latitude, longitude) {
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,weathercode,windspeed_10m&timezone=America%2FChicago`);
+    if (!response.ok) throw new Error('Unable to load weather data.');
+    const data = await response.json();
+    return data;
+}
+
+function celsiusToFahrenheit(celsius) {
+    return Math.round((celsius * 9) / 5 + 32);
+}
+
+function kmhToMph(kmh) {
+    return Math.round(kmh * 0.621371);
+}
+
+function formatHourLabel(isoTime) {
+    const hour = parseInt(isoTime.slice(11, 13), 10);
+    const suffix = hour === 0 ? '12 AM' : hour < 12 ? `${hour} AM` : hour === 12 ? '12 PM' : `${hour - 12} PM`;
+    return suffix;
+}
+
+function getHourlyForecast(hourlyData) {
+    const targetHours = [6, 7, 8, 9];
+    const entries = hourlyData.time.map((time, index) => ({
+        time,
+        temperature: hourlyData.temperature_2m[index],
+        weathercode: hourlyData.weathercode[index],
+        windspeed: hourlyData.windspeed_10m[index]
+    }));
+
+    return entries.filter(entry => {
+        const hour = parseInt(entry.time.slice(11, 13), 10);
+        return targetHours.includes(hour);
+    }).slice(0, targetHours.length);
+}
+
+async function fetchLocalWeather() {
+    const weatherWidget = document.getElementById('weather-widget');
+    weatherWidget.innerHTML = '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div> Loading weather...';
+
+    const coords = {
+        latitude: 44.1700,
+        longitude: -88.4706,
+        city: 'Neenah',
+        region: 'WI'
+    };
+
+    try {
+        const weatherData = await fetchWeatherData(coords.latitude, coords.longitude);
+        const weather = weatherData.current_weather;
+        const forecast = getHourlyForecast(weatherData.hourly);
+        const temperatureF = celsiusToFahrenheit(weather.temperature);
+        const locationName = `${coords.city}, ${coords.region}`;
+        const forecastHtml = forecast.map(entry => {
+            const entryWindMph = kmhToMph(entry.windspeed);
+            return `
+                    <div class="forecast-hour text-center px-2 py-1 rounded bg-white bg-opacity-75">
+                        <div class="fw-bold">${formatHourLabel(entry.time)}</div>
+                        <div>${celsiusToFahrenheit(entry.temperature)}°F</div>
+                        <div class="text-muted small">${weatherCodeToDescription(entry.weathercode)}</div>
+                        <div class="text-muted small">Wind ${entryWindMph} mph</div>
+                    </div>
+                `;
+        }).join('');
+
+        weatherWidget.innerHTML = `
+            <div class="alert alert-info weather-banner" role="alert">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+                    <div>
+                        <h5 class="mb-1">${locationName}</h5>
+                    </div>
+                    <div class="weather-forecast d-flex flex-wrap gap-2 mt-3 mt-md-0">
+                        ${forecastHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+    } catch (error) {
+        weatherWidget.innerHTML = `<div class="alert alert-warning">Unable to load weather data. ${error.message}</div>`;
+    }
+}
+
 // Function to populate team filter dropdown
 function populateTeamFilter() {
     const teamFilter = document.getElementById('teamFilter');
-    teams.forEach(team => {
+    const sortedTeams = [...teams].sort((a, b) => a.name.localeCompare(b.name));
+    sortedTeams.forEach(team => {
         const option = document.createElement('option');
         option.value = team.name;
         option.textContent = team.name;
@@ -285,6 +467,8 @@ document.addEventListener('DOMContentLoaded', function() {
     populateSchedule();
     populateStandings();
     populateTeamFilter();
+    populateUpcomingGames();
+    fetchLocalWeather();
     
     // Add event listener for team filter
     const teamFilter = document.getElementById('teamFilter');
