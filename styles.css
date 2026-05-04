@@ -1,0 +1,40 @@
+/* Custom styles for Sports League Manager */
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+header {
+    margin-bottom: 0;
+}
+
+nav {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+section {
+    padding: 2rem 0;
+}
+
+.team-card {
+    margin-bottom: 1rem;
+}
+
+.team-card .card {
+    height: 100%;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+    
+    .team-card {
+        margin-bottom: 1rem;
+    }
+}
