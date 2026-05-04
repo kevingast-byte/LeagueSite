@@ -464,15 +464,31 @@ function populateStandings() {
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
-    populateSchedule();
-    populateStandings();
-    populateTeamFilter();
-    populateUpcomingGames();
-    fetchLocalWeather();
-    
-    // Add event listener for team filter
-    const teamFilter = document.getElementById('teamFilter');
-    teamFilter.addEventListener('change', function() {
-        filterSchedule(this.value);
-    });
+    const scheduleBody = document.getElementById('schedule-body');
+    const standingsBody = document.getElementById('standings-body');
+    const upcomingGamesDiv = document.getElementById('upcoming-games');
+    const weatherWidget = document.getElementById('weather-widget');
+
+    if (scheduleBody) {
+        populateSchedule();
+        populateTeamFilter();
+        const teamFilter = document.getElementById('teamFilter');
+        if (teamFilter) {
+            teamFilter.addEventListener('change', function() {
+                filterSchedule(this.value);
+            });
+        }
+    }
+
+    if (standingsBody) {
+        populateStandings();
+    }
+
+    if (upcomingGamesDiv) {
+        populateUpcomingGames();
+    }
+
+    if (weatherWidget) {
+        fetchLocalWeather();
+    }
 });
