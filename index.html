@@ -22,13 +22,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" data-bs-toggle="tab" href="#welcome">Welcome</a>
+                        <a class="nav-link active" aria-current="page" href="#welcome">Welcome</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#schedule">Schedule</a>
+                        <a class="nav-link" href="#schedule">Schedule</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#standings">Standings</a>
+                        <a class="nav-link" href="#standings">Standings</a>
                     </li>
                 </ul>
             </div>
@@ -36,77 +36,64 @@
     </nav>
 
     <main class="container my-5">
-        <ul class="nav nav-tabs" id="leagueTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="welcome-tab" data-bs-toggle="tab" data-bs-target="#welcome" type="button" role="tab" aria-controls="welcome" aria-selected="true">Welcome</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="schedule-tab" data-bs-toggle="tab" data-bs-target="#schedule" type="button" role="tab" aria-controls="schedule" aria-selected="false">Schedule</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="standings-tab" data-bs-toggle="tab" data-bs-target="#standings" type="button" role="tab" aria-controls="standings" aria-selected="false">Standings</button>
-            </li>
-        </ul>
-        <div class="tab-content" id="leagueTabsContent">
-            <div class="tab-pane fade show active" id="welcome" role="tabpanel" aria-labelledby="welcome-tab">
-                <h2 class="mt-4">Welcome to the 2026 Summer Season!</h2>
-                <p>Although this schedule lists a home team, we will still flip a coin prior to each game to determin the home team.</p>
-                <p>The end of the season tournament is scheduled for August 8th.</p>
-                <p>Contact Kevin Gast @920-585-0605 with game results by noon on Tuesdays.</p>
-                <h3>Upcoming Games</h3>
-                <div id="upcoming-games" class="row mb-4">
-                    <!-- Upcoming games will be populated here -->
-                </div>
-                <div id="weather-widget" class="mb-4"></div>
+        <section id="welcome" class="mt-4">
+            <h2>Welcome to the 2026 Summer Season!</h2>
+            <p>Although this schedule lists a home team, we will still flip a coin prior to each game to determin the home team.</p>
+            <p>The end of the season tournament is scheduled for August 8th.</p>
+            <p>Contact Kevin Gast @920-585-0605 with game results by noon on Tuesdays.</p>
+            <h3>Upcoming Games</h3>
+            <div id="upcoming-games" class="row mb-4">
+                <!-- Upcoming games will be populated here -->
             </div>
-            <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="schedule-tab">
-                <h2 class="mt-4">Schedule</h2>
-                <div class="mb-3">
-                    <label for="teamFilter" class="form-label">Filter by Team:</label>
-                    <select class="form-select" id="teamFilter">
-                        <option value="all">All Teams</option>
-                        <!-- Team options will be populated here -->
-                    </select>
-                </div>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Venue</th>
-                            <th>Home Team</th>
-                            <th>Away Team</th>
-                            <th>Score</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="schedule-body">
-                        <!-- Schedule data will be populated here -->
-                    </tbody>
-                </table>
+            <div id="weather-widget" class="mb-4"></div>
+        </section>
+        <section id="schedule" class="mt-5">
+            <h2>Schedule</h2>
+            <div class="mb-3">
+                <label for="teamFilter" class="form-label">Filter by Team:</label>
+                <select class="form-select" id="teamFilter">
+                    <option value="all">All Teams</option>
+                    <!-- Team options will be populated here -->
+                </select>
             </div>
-            <div class="tab-pane fade" id="standings" role="tabpanel" aria-labelledby="standings-tab">
-                <h2 class="mt-4">Standings</h2>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Team</th>
-                            <th>Wins</th>
-                            <th>Losses</th>
-                            <th>Tied</th>
-                            <th>Win %</th>
-                            <th>GB</th>
-                            <th>RF</th>
-                            <th>RA</th>
-                            <th>RD</th>
-                        </tr>
-                    </thead>
-                    <tbody id="standings-body">
-                        <!-- Standings data will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Venue</th>
+                        <th>Home Team</th>
+                        <th>Away Team</th>
+                        <th>Score</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-body">
+                    <!-- Schedule data will be populated here -->
+                </tbody>
+            </table>
+        </section>
+        <section id="standings" class="mt-5">
+            <h2>Standings</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Wins</th>
+                        <th>Losses</th>
+                        <th>Tied</th>
+                        <th>Win %</th>
+                        <th>GB</th>
+                        <th>RF</th>
+                        <th>RA</th>
+                        <th>RD</th>
+                    </tr>
+                </thead>
+                <tbody id="standings-body">
+                    <!-- Standings data will be populated here -->
+                </tbody>
+            </table>
+        </section>
     </main>
 
     <footer class="bg-dark text-white text-center py-3">
