@@ -1,146 +1,27 @@
 // Sample data for the sports league
-const teams = [
-    { name: 'Christ the Rock', logo: 'https://via.placeholder.com/100?text=Christ+the+Rock', description: 'A strong team with great players.' },
-    { name: 'Sounds of Thunder', logo: 'https://via.placeholder.com/100?text=Sounds+of+Thunder', description: 'Known for their defensive strategy.' },
-    { name: 'ATC', logo: 'https://via.placeholder.com/100?text=ATC', description: 'Rising stars in the league.' },
-    { name: 'Mason Street', logo: 'https://via.placeholder.com/100?text=Mason+Street', description: 'Champions of the previous season.' },
-    { name: 'Community Bible #2', logo: 'https://via.placeholder.com/100?text=Community+Bible+%232', description: 'A dedicated team.' },
-    { name: 'XCEL #2', logo: 'https://via.placeholder.com/100?text=XCEL+%232', description: 'Fast and furious.' },
-    { name: 'Bennett and the Jets', logo: 'https://via.placeholder.com/100?text=Bennett+and+the+Jets', description: 'Dynamic players.' },
-    { name: 'MILLCITY', logo: 'https://via.placeholder.com/100?text=MILLCITY', description: 'City champions.' },
-    { name: 'Community Bible', logo: 'https://via.placeholder.com/100?text=Community+Bible', description: 'Bible-based team.' },
-    { name: 'Calvary 3', logo: 'https://via.placeholder.com/100?text=Calvary+3', description: 'Third Calvary team.' },
-    { name: 'VALLEY HARVEST', logo: 'https://via.placeholder.com/100?text=VALLEY+HARVEST', description: 'Harvesting wins.' },
-    { name: 'FREEDOM FELLOWSHIP', logo: 'https://via.placeholder.com/100?text=FREEDOM+FELLOWSHIP', description: 'Fellowship of freedom.' },
-    { name: 'Calvary Bible #1', logo: 'https://via.placeholder.com/100?text=Calvary+Bible+%231', description: 'First Calvary Bible.' },
-    { name: 'River Valley', logo: 'https://via.placeholder.com/100?text=River+Valley', description: 'Valley vibes.' },
-    { name: 'Shepherd of the Hills', logo: 'https://via.placeholder.com/100?text=Shepherd+of+the+Hills', description: 'Hill shepherds.' },
-    { name: 'Appleton Gospel Church', logo: 'https://via.placeholder.com/100?text=Appleton+Gospel+Church', description: 'Gospel church team.' },
-    { name: 'Brothers In Christ', logo: 'https://via.placeholder.com/100?text=Brothers+In+Christ', description: 'Brothers united.' }
-];
+let teams = [];
+let schedule = [];
 
-const schedule = [
-    { date: '2026-05-04', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Christ the Rock', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Sounds of Thunder', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'ATC', away: 'Brothers In Christ', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Mason Street', away: 'Brothers In Christ', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Community Bible #2', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'XCEL #2', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Bennett and the Jets', away: 'River Valley', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'MILLCITY', away: 'River Valley', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Community Bible', away: 'Shepherd of the Hills', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Community Bible', away: 'XCEL #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Calvary 3', away: 'VALLEY HARVEST', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-04', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Calvary 3', away: 'FREEDOM FELLOWSHIP', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'VALLEY HARVEST', away: 'Bennett and the Jets', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'VALLEY HARVEST', away: 'FREEDOM FELLOWSHIP', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Christ the Rock', away: 'FREEDOM FELLOWSHIP', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Christ the Rock', away: 'Calvary 3', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Calvary Bible #1', away: 'ATC', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Calvary Bible #1', away: 'MILLCITY', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Community Bible', away: 'River Valley', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Community Bible', away: 'Sounds of Thunder', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Appleton Gospel Church', away: 'Mason Street', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Appleton Gospel Church', away: 'XCEL #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Community Bible #2', away: 'XCEL #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-11', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Community Bible #2', away: 'Shepherd of the Hills', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Christ the Rock', away: 'VALLEY HARVEST', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'XCEL #2', away: 'FREEDOM FELLOWSHIP', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Bennett and the Jets', away: 'FREEDOM FELLOWSHIP', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Bennett and the Jets', away: 'Brothers In Christ', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Mason Street', away: 'Shepherd of the Hills', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Mason Street', away: 'Community Bible', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Calvary 3', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Calvary 3', away: 'ATC', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Community Bible #2', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Community Bible #2', away: 'MILLCITY', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Sounds of Thunder', away: 'MILLCITY', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-05-18', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Sounds of Thunder', away: 'River Valley', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'FREEDOM FELLOWSHIP', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Calvary 3', away: 'Bennett and the Jets', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Christ the Rock', away: 'Bennett and the Jets', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Christ the Rock', away: 'XCEL #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Mason Street', away: 'MILLCITY', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Mason Street', away: 'VALLEY HARVEST', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Shepherd of the Hills', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Shepherd of the Hills', away: 'Sounds of Thunder', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Community Bible #2', away: 'Brothers In Christ', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'River Valley', away: 'Brothers In Christ', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'River Valley', away: 'ATC', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-01', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Community Bible', away: 'ATC', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'XCEL #2', away: 'MILLCITY', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'XCEL #2', away: 'Shepherd of the Hills', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'River Valley', away: 'Shepherd of the Hills', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'River Valley', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Bennett and the Jets', away: 'Sounds of Thunder', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Brothers In Christ', away: 'VALLEY HARVEST', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Community Bible', away: 'Community Bible #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Community Bible', away: 'Calvary 3', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Christ the Rock', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Christ the Rock', away: 'ATC', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'FREEDOM FELLOWSHIP', away: 'ATC', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-08', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'FREEDOM FELLOWSHIP', away: 'Mason Street', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'FREEDOM FELLOWSHIP', away: 'River Valley', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'FREEDOM FELLOWSHIP', away: 'Community Bible', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Christ the Rock', away: 'Community Bible', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'VALLEY HARVEST', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Calvary 3', away: 'Mason Street', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Calvary 3', away: 'Shepherd of the Hills', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Brothers In Christ', away: 'XCEL #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Brothers In Christ', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'ATC', away: 'MILLCITY', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Bennett and the Jets', away: 'MILLCITY', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Bennett and the Jets', away: 'Community Bible #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-15', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Sounds of Thunder', away: 'Community Bible #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Christ the Rock', away: 'River Valley', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Christ the Rock', away: 'Brothers In Christ', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Shepherd of the Hills', away: 'Brothers In Christ', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Shepherd of the Hills', away: 'FREEDOM FELLOWSHIP', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'VALLEY HARVEST', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'VALLEY HARVEST', away: 'MILLCITY', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Calvary 3', away: 'Community Bible #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Bennett and the Jets', away: 'ATC', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'XCEL #2', away: 'Community Bible', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'XCEL #2', away: 'Sounds of Thunder', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Calvary Bible #1', away: 'Sounds of Thunder', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-22', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Calvary Bible #1', away: 'Mason Street', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Mason Street', away: 'Bennett and the Jets', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Mason Street', away: 'Community Bible #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'ATC', away: 'Community Bible #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'ATC', away: 'Sounds of Thunder', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'MILLCITY', away: 'Calvary 3', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'MILLCITY', away: 'Community Bible', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'VALLEY HARVEST', away: 'River Valley', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'VALLEY HARVEST', away: 'XCEL #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Appleton Gospel Church', away: 'FREEDOM FELLOWSHIP', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Appleton Gospel Church', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Shepherd of the Hills', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-06-29', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Shepherd of the Hills', away: 'Christ the Rock', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'VALLEY HARVEST', away: 'Community Bible #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Brothers In Christ', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Brothers In Christ', away: 'Calvary 3', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'River Valley', away: 'Calvary 3', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Sounds of Thunder', away: 'FREEDOM FELLOWSHIP', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'Sounds of Thunder', away: 'Christ the Rock', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Mason Street', away: 'ATC', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Mason Street', away: 'XCEL #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'MILLCITY', away: 'Shepherd of the Hills', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'MILLCITY', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Bennett and the Jets', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-06', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Bennett and the Jets', away: 'Community Bible', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '6:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Calvary 3', away: 'Sounds of Thunder', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '7:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Brothers In Christ', away: 'Sounds of Thunder', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '8:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'Brothers In Christ', away: 'Community Bible', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '9:00 pm', venue: 'Memorial Park Northwest - MPN#3', home: 'VALLEY HARVEST', away: 'Shepherd of the Hills', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '6:00 pm', venue: 'Memorial Park South - MPS#2', home: 'River Valley', away: 'Calvary Bible #1', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '7:00 pm', venue: 'Memorial Park South - MPS#2', home: 'River Valley', away: 'Mason Street', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '6:00 pm', venue: 'Memorial Park East - MPE#1', home: 'MILLCITY', away: 'Christ the Rock', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '7:00 pm', venue: 'Memorial Park East - MPE#1', home: 'Community Bible #2', away: 'FREEDOM FELLOWSHIP', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '6:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'Bennett and the Jets', away: 'XCEL #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '7:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'ATC', away: 'XCEL #2', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '8:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'ATC', away: 'Appleton Gospel Church', score: 'TBD', status: 'Upcoming' },
-    { date: '2026-07-13', time: '9:00 pm', venue: 'Jefferson Park Menasha - JPM#1', home: 'FREEDOM FELLOWSHIP', away: 'Mason Street', score: 'TBD', status: 'Upcoming' }
-];
+// Function to load CSV data
+function loadCSV(url) {
+    return fetch(url)
+        .then(response => response.text())
+        .then(text => {
+            const lines = text.split('\n').filter(line => line.trim());
+            const headers = lines[0].split(',');
+            const data = lines.slice(1).map(line => {
+                const values = line.split(',');
+                const obj = {};
+                headers.forEach((header, i) => {
+                    obj[header.trim()] = values[i] ? values[i].trim() : '';
+                });
+                return obj;
+            });
+            return data;
+        });
+}
+
+
 
 // Function to calculate standings from schedule
 function calculateStandings() {
@@ -463,32 +344,39 @@ function populateStandings() {
 }
 
 // Initialize the page
-document.addEventListener('DOMContentLoaded', function() {
-    const scheduleBody = document.getElementById('schedule-body');
-    const standingsBody = document.getElementById('standings-body');
-    const upcomingGamesDiv = document.getElementById('upcoming-games');
-    const weatherWidget = document.getElementById('weather-widget');
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        teams = await loadCSV('teams.csv');
+        schedule = await loadCSV('schedule.csv');
 
-    if (scheduleBody) {
-        populateSchedule();
-        populateTeamFilter();
-        const teamFilter = document.getElementById('teamFilter');
-        if (teamFilter) {
-            teamFilter.addEventListener('change', function() {
-                filterSchedule(this.value);
-            });
+        const scheduleBody = document.getElementById('schedule-body');
+        const standingsBody = document.getElementById('standings-body');
+        const upcomingGamesDiv = document.getElementById('upcoming-games');
+        const weatherWidget = document.getElementById('weather-widget');
+
+        if (scheduleBody) {
+            populateSchedule();
+            populateTeamFilter();
+            const teamFilter = document.getElementById('teamFilter');
+            if (teamFilter) {
+                teamFilter.addEventListener('change', function() {
+                    filterSchedule(this.value);
+                });
+            }
         }
-    }
 
-    if (standingsBody) {
-        populateStandings();
-    }
+        if (standingsBody) {
+            populateStandings();
+        }
 
-    if (upcomingGamesDiv) {
-        populateUpcomingGames();
-    }
+        if (upcomingGamesDiv) {
+            populateUpcomingGames();
+        }
 
-    if (weatherWidget) {
-        fetchLocalWeather();
+        if (weatherWidget) {
+            fetchLocalWeather();
+        }
+    } catch (error) {
+        console.error('Error loading data:', error);
     }
 });
