@@ -9,6 +9,61 @@ function getCurrentSeason() {
     return season === '2027' ? 'data/schedule-2027.csv' : 'data/schedule.csv';
 }
 
+function getSeasonYear() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('season') === '2027' ? '2027' : '2026';
+}
+
+function loadSharedHeader() {
+    return fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+            const container = document.getElementById('shared-header');
+            if (container) {
+                container.innerHTML = html;
+                updateSharedHeader();
+            }
+        });
+}
+
+function updateSharedHeader() {
+    const seasonYear = getSeasonYear();
+    const brand = document.querySelector('#shared-header .navbar-brand');
+    if (brand) {
+        brand.textContent = `${seasonYear} Summer Season`;
+    }
+
+    const navLinks = document.querySelectorAll('#shared-header .navbar-nav .nav-link');
+    navLinks.forEach(link => {
+        const hrefValue = link.getAttribute('href');
+        const linkUrl = new URL(hrefValue, window.location.origin);
+        linkUrl.searchParams.set('season', seasonYear);
+        link.setAttribute('href', linkUrl.pathname + linkUrl.search);
+        link.classList.remove('active');
+    });
+
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    navLinks.forEach(link => {
+        const linkPath = link.getAttribute('href').split('?')[0];
+        if ((currentPage === '' || currentPage === 'index.html') && linkPath === 'index.html') {
+            link.classList.add('active');
+        } else if (linkPath === currentPage) {
+            link.classList.add('active');
+        }
+    });
+
+    const seasonSelector = document.getElementById('seasonSelector');
+    if (seasonSelector) {
+        seasonSelector.value = seasonYear;
+        seasonSelector.addEventListener('change', function() {
+            const selectedYear = this.value;
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('season', selectedYear);
+            window.location.href = newUrl.toString();
+        });
+    }
+}
+
 // Function to load CSV data
 function loadCSV(url) {
     return fetch(url)
@@ -361,6 +416,7 @@ function populateStandings() {
 // Initialize the page
 document.addEventListener('DOMContentLoaded', async function() {
     try {
+        await loadSharedHeader();
         teams = await loadCSV('data/teams.csv');
         schedule = await loadCSV(getCurrentSeason());
 
