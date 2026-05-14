@@ -128,6 +128,12 @@ function populateUpcomingGames() {
         return;
     }
 
+    // Format the date for display
+    const dateObj = new Date(nextDate);
+    const formattedDate = dateObj.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    upcomingGamesDiv.innerHTML += `<h3 class="mt-3">${formattedDate}</h3>`;
+
     const gamesByVenue = nextGames.reduce((groups, game) => {
         if (!groups[game.venue]) groups[game.venue] = [];
         groups[game.venue].push(game);
