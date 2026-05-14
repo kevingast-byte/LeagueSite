@@ -14,16 +14,50 @@ function getSeasonYear() {
     return urlParams.get('season') === '2027' ? '2027' : '2026';
 }
 
+const sharedHeaderHTML = `
+<header class="bg-primary text-white text-center py-4">
+    <h1>Independent Church League</h1>
+    <p>Philippians 2:14... "Do all things without grumbling or disputing that you may prove ourselves to
+be blameless and innocent, children of God above reproach in the midst of a crooked and perverse
+generation. Among whom you appear as lights in the world."</p>
+</header>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">2026 Summer Season</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Welcome</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="schedule.html">Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="standings.html">Standings</a>
+                </li>
+            </ul>
+            <div class="d-flex ms-auto">
+                <select id="seasonSelector" class="form-select" style="width: auto;">
+                    <option value="2026">2026 Season</option>
+                    <option value="2027">2027 Season</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</nav>
+`;
+
 function loadSharedHeader() {
-    return fetch('header.html')
-        .then(response => response.text())
-        .then(html => {
-            const container = document.getElementById('shared-header');
-            if (container) {
-                container.innerHTML = html;
-                updateSharedHeader();
-            }
-        });
+    const container = document.getElementById('shared-header');
+    if (container) {
+        container.innerHTML = sharedHeaderHTML;
+        updateSharedHeader();
+    }
+    return Promise.resolve();
 }
 
 function updateSharedHeader() {
@@ -446,20 +480,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         if (weatherWidget) {
             fetchLocalWeather();
-        }
-
-        // Set season selector
-        const seasonSelector = document.getElementById('seasonSelector');
-        if (seasonSelector) {
-            const currentSeasonFile = getCurrentSeason();
-            const currentYear = currentSeasonFile === 'schedule-2027.csv' ? '2027' : '2026';
-            seasonSelector.value = currentYear;
-            seasonSelector.addEventListener('change', function() {
-                const selectedYear = this.value;
-                const newUrl = new URL(window.location);
-                newUrl.searchParams.set('season', selectedYear);
-                window.location.href = newUrl.toString();
-            });
         }
     } catch (error) {
         console.error('Error loading data:', error);
