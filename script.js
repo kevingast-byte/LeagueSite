@@ -31,13 +31,13 @@ generation. Among whom you appear as lights in the world."</p>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">Welcome</a>
+                    <a class="nav-link" href="LeagueSite/index.html">Welcome</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="schedule.html">Schedule</a>
+                    <a class="nav-link" href="LeagueSite/schedule.html">Schedule</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="standings.html">Standings</a>
+                    <a class="nav-link" href="LeagueSite/standings.html">Standings</a>
                 </li>
             </ul>
             <div class="d-flex ms-auto">
