@@ -2,6 +2,13 @@
 let teams = [];
 let schedule = [];
 
+// Function to get current season from URL parameter
+function getCurrentSeason() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const season = urlParams.get('season');
+    return season === '2027' ? 'data/schedule-2027.csv' : 'data/schedule.csv';
+}
+
 // Function to load CSV data
 function loadCSV(url) {
     return fetch(url)
@@ -34,8 +41,9 @@ function calculateStandings() {
 
     // Process completed games
     schedule.forEach(game => {
-        if (game.status === 'Completed' && game.score !== 'TBD') {
-            const [homeScore, awayScore] = game.score.split('-').map(Number);
+        if (game.status === 'Completed' && game.home_score !== 'TBD' && game.away_score !== 'TBD') {
+            const homeScore = Number(game.home_score);
+            const awayScore = Number(game.away_score);
             const homeStats = teamStats[game.home];
             const awayStats = teamStats[game.away];
 
@@ -319,7 +327,8 @@ function populateSchedule() {
                 <td>${game.venue}</td>
                 <td>${game.home}</td>
                 <td>${game.away}</td>
-                <td>${game.score}</td>
+                <td>${game.home_score}</td>
+                <td>${game.away_score}</td>
                 <td>${game.status}</td>
             </tr>
         `;
@@ -352,8 +361,8 @@ function populateStandings() {
 // Initialize the page
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        teams = await loadCSV('teams.csv');
-        schedule = await loadCSV('schedule.csv');
+        teams = await loadCSV('data/teams.csv');
+        schedule = await loadCSV(getCurrentSeason());
 
         const scheduleBody = document.getElementById('schedule-body');
         const standingsBody = document.getElementById('standings-body');
@@ -381,6 +390,20 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         if (weatherWidget) {
             fetchLocalWeather();
+        }
+
+        // Set season selector
+        const seasonSelector = document.getElementById('seasonSelector');
+        if (seasonSelector) {
+            const currentSeasonFile = getCurrentSeason();
+            const currentYear = currentSeasonFile === 'schedule-2027.csv' ? '2027' : '2026';
+            seasonSelector.value = currentYear;
+            seasonSelector.addEventListener('change', function() {
+                const selectedYear = this.value;
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('season', selectedYear);
+                window.location.href = newUrl.toString();
+            });
         }
     } catch (error) {
         console.error('Error loading data:', error);
